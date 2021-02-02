@@ -24,6 +24,7 @@
 
 @code {
     private List<int> alerts;
+    private static int countStatic = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,6 +36,8 @@
     {
         await js.LogToConsole("Add button was pressed");
         alerts.Add(alerts.DefaultIfEmpty(0).Max() + 1);
+        countStatic++;
+        await js.InvokeVoidAsync("dotnetStaticInvocation");
     }
 
     private async Task DeleteAlert(object item)
@@ -47,4 +50,11 @@
             alerts.Remove((int)item);
         }
     }
+
+    [JSInvokable]
+    public static Task<int> GetTotalAdded()
+    {
+        return Task.FromResult(countStatic);
+    }
+
 }
