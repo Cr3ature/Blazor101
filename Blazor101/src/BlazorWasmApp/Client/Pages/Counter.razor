@@ -7,6 +7,7 @@
 <p>Current count: @(alerts?.Count() ?? 0)</p>
 
 <button class="btn btn-primary" @onclick="AddAlert">Add alert</button>
+<button class="btn btn-primary" @onclick="AddAlertJavaScript">Add alert JavaScript</button>
 
 <ListComponent Items="alerts" Context="alert">
     <NullTemplate>
@@ -32,13 +33,17 @@
         alerts = new List<int>();
     }
 
-    private async Task AddAlert()
+    [JSInvokable]
+    public async Task AddAlert()
     {
         await js.LogToConsole("Add button was pressed");
         alerts.Add(alerts.DefaultIfEmpty(0).Max() + 1);
         countStatic++;
         await js.InvokeVoidAsync("dotnetStaticInvocation");
     }
+
+    private async Task AddAlertJavaScript()
+        => await js.InvokeVoidAsync("dotnetInstanceInvocation", DotNetObjectReference.Create(this));
 
     private async Task DeleteAlert(object item)
     {

@@ -8,3 +8,7 @@ function dotnetStaticInvocation() {
             console.log("Count triggered from javascript is " + result);
         });
 }
+
+function dotnetInstanceInvocation(dotnetHelper) {
+    dotnetHelper.invokeMethodAsync("AddAlert");
+}
