@@ -2,15 +2,40 @@
 
 <h1>Counter</h1>
 
-<p>Current count: @currentCount</p>
+<p>Current count: @(alerts?.Count() ?? 0)</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="AddAlert">Add alert</button>
+
+@if (alerts == null)
+{
+    <p>Loading...</p>
+}
+else if (alerts.Count == 0)
+{
+    <p>No alerts in list</p>
+}
+else
+{
+
+    @foreach (var alert in alerts)
+    {
+        <AlertMessage>
+            <span>This is an alert @alert</span>
+        </AlertMessage>
+    }
+}
 
 @code {
-    private int currentCount = 0;
+    private List<int> alerts;
 
-    private void IncrementCount()
+    protected override async Task OnInitializedAsync()
     {
-        currentCount++;
+        await Task.Delay(2000);
+        alerts = new List<int>();
+    }
+
+    private void AddAlert()
+    {
+        alerts.Add(alerts.DefaultIfEmpty(0).Max() + 1);
     }
 }
