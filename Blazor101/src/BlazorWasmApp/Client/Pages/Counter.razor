@@ -26,6 +26,7 @@
 @code {
     private List<int> alerts;
     private static int countStatic = 0;
+    IJSObjectReference module;
 
     protected override async Task OnInitializedAsync()
     {
@@ -40,6 +41,12 @@
         alerts.Add(alerts.DefaultIfEmpty(0).Max() + 1);
         countStatic++;
         await js.InvokeVoidAsync("dotnetStaticInvocation");
+
+        if (alerts.Count() == 10)
+        {
+            module = await js.InvokeAsync<IJSObjectReference>("import", "./js/Counter.js");
+            await module.InvokeVoidAsync("displayAlert", "10 alerts added");
+        };
     }
 
     private async Task AddAlertJavaScript()
