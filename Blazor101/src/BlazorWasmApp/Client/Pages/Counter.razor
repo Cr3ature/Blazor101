@@ -1,5 +1,7 @@
 ﻿@page "/counter"
 
+@inject IJSRuntime js
+
 <h1>Counter</h1>
 
 <p>Current count: @(alerts?.Count() ?? 0)</p>
@@ -34,8 +36,13 @@
         alerts.Add(alerts.DefaultIfEmpty(0).Max() + 1);
     }
 
-    private void DeleteAlert(object item)
+    private async Task DeleteAlert(object item)
     {
-        alerts.Remove((int)item);
+        var confirmed = await js.Confirm($"Are you sure you want to delete alert {item}");
+
+        if (confirmed)
+        {
+            alerts.Remove((int)item);
+        }
     }
 }
