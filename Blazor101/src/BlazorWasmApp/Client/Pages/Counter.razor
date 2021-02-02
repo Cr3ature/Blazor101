@@ -31,13 +31,15 @@
         alerts = new List<int>();
     }
 
-    private void AddAlert()
+    private async Task AddAlert()
     {
+        await js.LogToConsole("Add button was pressed");
         alerts.Add(alerts.DefaultIfEmpty(0).Max() + 1);
     }
 
     private async Task DeleteAlert(object item)
     {
+        await js.LogToConsole($"Delete was pressed for {item}");
         var confirmed = await js.Confirm($"Are you sure you want to delete alert {item}");
 
         if (confirmed)

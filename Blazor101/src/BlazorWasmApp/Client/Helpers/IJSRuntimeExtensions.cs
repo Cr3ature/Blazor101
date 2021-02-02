@@ -8,5 +8,7 @@ namespace BlazorWasmApp.Client.Helpers
         public static async ValueTask<bool> Confirm(this IJSRuntime js, string message)
             => await js.InvokeAsync<bool>("confirm", message);
 
+        public static async ValueTask LogToConsole(this IJSRuntime js, string message)
+            => await js.InvokeVoidAsync("logToConsole", message);
     }
 }
