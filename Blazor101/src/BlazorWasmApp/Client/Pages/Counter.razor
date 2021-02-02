@@ -6,24 +6,19 @@
 
 <button class="btn btn-primary" @onclick="AddAlert">Add alert</button>
 
-@if (alerts == null)
-{
-    <p>Loading...</p>
-}
-else if (alerts.Count == 0)
-{
-    <p>No alerts in list</p>
-}
-else
-{
-
-    @foreach (var alert in alerts)
-    {
+<ListComponent Items="alerts" Context="alert">
+    <NullTemplate>
+        <p>Wait till we build this for you</p>
+    </NullTemplate>
+    <EmptyTemplate>
+        <p>Nothing to see here, move on</p>
+    </EmptyTemplate>
+    <ElementTemplate>
         <AlertMessage>
             <span>This is an alert @alert</span>
         </AlertMessage>
-    }
-}
+    </ElementTemplate>
+</ListComponent>
 
 @code {
     private List<int> alerts;
