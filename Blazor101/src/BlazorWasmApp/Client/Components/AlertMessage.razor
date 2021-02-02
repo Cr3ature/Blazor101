@@ -1,7 +1,16 @@
 ﻿<div class="alert alert-danger">
     @ChildContent
+    @if (DeleteAlert.HasDelegate)
+    {
+        <button @onclick="@(() => DeleteAlert.InvokeAsync(Alert))" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    }
 </div>
 
 @code {
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment ShowDelete { get; set; }
+    [Parameter] public int Alert{ get; set; }
+    [Parameter] public EventCallback<object> DeleteAlert { get; set; }
 }

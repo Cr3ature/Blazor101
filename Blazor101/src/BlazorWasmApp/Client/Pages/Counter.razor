@@ -14,7 +14,7 @@
         <p>Nothing to see here, move on</p>
     </EmptyTemplate>
     <ElementTemplate>
-        <AlertMessage>
+        <AlertMessage DeleteAlert="DeleteAlert" Alert="alert">
             <span>This is an alert @alert</span>
         </AlertMessage>
     </ElementTemplate>
@@ -32,5 +32,10 @@
     private void AddAlert()
     {
         alerts.Add(alerts.DefaultIfEmpty(0).Max() + 1);
+    }
+
+    private void DeleteAlert(object item)
+    {
+        alerts.Remove((int)item);
     }
 }
